@@ -24,7 +24,6 @@ public class App
         final String USER = "postgres";
         final String PASS = "";
         final String folder = "C:\\Users\\Chebakov.AA\\neo4j\\import\\pitc";
-        List<String> models = new ArrayList<>();
         Statement stmt = null;
         Connection connection = getConnection(DB_URL, USER, PASS);
         File[] files = (new File(folder)).listFiles();
@@ -34,8 +33,21 @@ public class App
         if (connection == null) { return; }
         try {
             stmt = connection.createStatement();
-            ResultSet res = stmt.executeQuery("select table_name from INFORMATION_SCHEMA.views WHERE table_schema = 'neo'");
-            while (res.next()) {
+            toCSV(stmt, folder,"select table_name from INFORMATION_SCHEMA.views WHERE table_schema = 'neo'");
+            toCSV(stmt, folder,"select table_name from INFORMATION_SCHEMA.tables WHERE table_schema = 'neo' AND table_type = 'BASE TABLE'");
+            stmt.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+    
+    private static void toCSV(Statement stmt, String folder, String query) {
+        List<String> models = new ArrayList<>();
+        ResultSet res = null;
+        try {
+            res = stmt.executeQuery(query);
+            while (true) {
+                    if (!res.next()) break;
                 models.add(res.getString("table_name"));
             }
             for(String model:models) {
@@ -66,13 +78,9 @@ public class App
                     e.printStackTrace();
                 }
             }
-
-            stmt.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-    
-    
     }
     
     private static void saveTable(Path fn, List<String[]> data) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, NoSuchFieldException {
