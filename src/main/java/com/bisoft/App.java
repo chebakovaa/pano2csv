@@ -86,7 +86,7 @@ public class App
     private static void saveTable(Path fn, List<String[]> data) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, NoSuchFieldException {
         try (OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(fn.toString()), "UTF8")) { //"cp1251"
             data.stream()
-              .map(v -> Arrays.stream(v).collect(Collectors.joining(",")))
+              .map(v -> Arrays.stream(v).collect(Collectors.joining(";")))
               .forEach(v -> {
                   try {
                       out.write(v + "\r\n");
