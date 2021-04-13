@@ -3,6 +3,7 @@ package com.bisoft;
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,10 +21,10 @@ public class App
     }
     
     private static void SaveCSV() {
+        final String folder = Paths.get(System.getProperty("user.home"), "neo4j\\import\\pitc").toString();
         final String DB_URL = "jdbc:postgresql://192.168.1.60:1105/pitc";
         final String USER = "postgres";
         final String PASS = "";
-        final String folder = "C:\\Users\\Chebakov.AA\\neo4j\\import\\pitc";
         Statement stmt = null;
         Connection connection = getConnection(DB_URL, USER, PASS);
         File[] files = (new File(folder)).listFiles();
