@@ -1,5 +1,7 @@
 package com.bisoft;
 
+import com.bisoft.models.WorkFolder;
+
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Path;
@@ -21,21 +23,25 @@ public class App
     }
     
     private static void SaveCSV() {
-        final String folder = Paths.get(System.getProperty("user.home"), "neo4j\\import\\pitc").toString();
+
+        final File folder = new File(Paths.get(System.getProperty("user.home"), "neo4j\\import\\pitc").toUri());
         final String DB_URL = "jdbc:postgresql://192.168.1.60:1105/pitc";
         final String USER = "postgres";
         final String PASS = "";
-        Statement stmt = null;
         Connection connection = getConnection(DB_URL, USER, PASS);
-        File[] files = (new File(folder)).listFiles();
-        for(File fl:files){
-         fl.delete();
+    
+        try {
+            new WorkFolder(folder).prepare();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+    
+        Statement stmt = null;
         if (connection == null) { return; }
         try {
             stmt = connection.createStatement();
-            toCSV(stmt, folder,"select table_name from INFORMATION_SCHEMA.views WHERE table_schema = 'neo'");
-            toCSV(stmt, folder,"select table_name from INFORMATION_SCHEMA.tables WHERE table_schema = 'neo' AND table_type = 'BASE TABLE'");
+            toCSV(stmt, folder.toString(),"select table_name from INFORMATION_SCHEMA.views WHERE table_schema = 'neo'");
+            toCSV(stmt, folder.toString(),"select table_name from INFORMATION_SCHEMA.tables WHERE table_schema = 'neo' AND table_type = 'BASE TABLE'");
             stmt.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
