@@ -29,17 +29,16 @@ public class App
         final String USER = "postgres";
         final String PASS = "";
         Connection connection = getConnection(DB_URL, USER, PASS);
-    
+        if (connection == null) { return; }
+
         try {
             new WorkFolder(folder).prepare();
         } catch (Exception e) {
             e.printStackTrace();
         }
-    
-        Statement stmt = null;
-        if (connection == null) { return; }
+
         try {
-            stmt = connection.createStatement();
+            Statement stmt = connection.createStatement();
             toCSV(stmt, folder.toString(),"select table_name from INFORMATION_SCHEMA.views WHERE table_schema = 'neo'");
             toCSV(stmt, folder.toString(),"select table_name from INFORMATION_SCHEMA.tables WHERE table_schema = 'neo' AND table_type = 'BASE TABLE'");
             stmt.close();
