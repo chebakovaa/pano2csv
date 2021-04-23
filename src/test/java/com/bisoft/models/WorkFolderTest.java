@@ -1,15 +1,13 @@
 package com.bisoft.models;
 
-import org.junit.jupiter.api.*;
-
+import org.testng.annotations.*;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
+
 
 public class WorkFolderTest {
 	
@@ -17,8 +15,8 @@ public class WorkFolderTest {
 	private final File directory = new File(Paths.get(System.getProperty("java.io.tmpdir"), directoryName).toUri());
 	private FileReader reader;
 	
-	@BeforeEach
-	public void before(){
+	@BeforeGroups("throw")
+	public void beforeThrowCase(){
 		if (! directory.exists()){
 			directory.mkdir();
 		}
@@ -32,8 +30,8 @@ public class WorkFolderTest {
 		}
 	}
 	
-	@AfterEach
-	public void after(){
+	@AfterGroups("throw")
+	public void afterThrowCase(){
 		try {
 			reader.close();
 			String[] children = directory.list();
@@ -47,10 +45,43 @@ public class WorkFolderTest {
 	}
 	
 	
-	@Test
-	public void shouldThrows()
-	{
-		 Exception	exception = assertThrows(Exception.class, () ->  new WorkFolder(directory).prepare());
-		 assertTrue(exception.getMessage().equals("Not all file were deleted!"));
+	@Test(groups = {"throw"})
+	public void shouldBeThrows() throws Exception {
+		assertThat(new WorkFolder(directory))
+			.isNotNull();
+		assertThat(new WorkFolder(directory).prepare())
+			.withFailMessage("Not all file were deleted!");
 	}
+	
+	@BeforeGroups("normal")
+	public void beforeNormal(){
+		if (! directory.exists()){
+			directory.mkdir();
+		}
+		try {
+			File.createTempFile("tst","clear_1", directory);
+			File.createTempFile("tst","clear_2", directory);
+			File.createTempFile("tst","clear_3", directory);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@AfterGroups("normal")
+	public void afterNormal(){
+		String[] children = directory.list();
+		for (int i=0; i<children.length; i++) {
+			new File(directory, children[i]).deleteOnExit();
+		}
+		directory.deleteOnExit();
+	}
+	
+	
+	@Test(groups = {"normal"})
+	public void shouldWorkCorrectly() throws Exception {
+		assertThat(new WorkFolder(directory).prepare())
+			.isEqualTo(3);
+	}
+	
+	
 }

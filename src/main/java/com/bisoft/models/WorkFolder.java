@@ -10,11 +10,12 @@ public class WorkFolder {
 		this.folder = folder;
 	}
 	
-	public void prepare() throws Exception {
+	public int prepare() throws Exception {
 		File[] files = folder.listFiles();
 		for(File fl:files){
 			if(!fl.delete()) {throw new Exception("Not all file were deleted!");};
 		}
+		return files.length;
 	}
 	
 }
