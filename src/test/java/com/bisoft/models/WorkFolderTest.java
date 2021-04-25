@@ -6,16 +6,15 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Paths;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
-
-public class WorkFolderTest {
+class FolderContentTest {
 	
 	private final String directoryName = "dir_for_test";
 	private final File directory = new File(Paths.get(System.getProperty("java.io.tmpdir"), directoryName).toUri());
 	private FileReader reader;
 	
-	@BeforeGroups("throw")
+	@BeforeGroups(groups = "throw")
 	public void beforeThrowCase(){
 		if (! directory.exists()){
 			directory.mkdir();
@@ -30,7 +29,7 @@ public class WorkFolderTest {
 		}
 	}
 	
-	@AfterGroups("throw")
+	@AfterGroups(groups = "throw")
 	public void afterThrowCase(){
 		try {
 			reader.close();
@@ -45,15 +44,14 @@ public class WorkFolderTest {
 	}
 	
 	
-	@Test(groups = {"throw"})
+	@Test(groups = "throw")
 	public void shouldBeThrows() throws Exception {
-		assertThat(new WorkFolder(directory))
-			.isNotNull();
-		assertThat(new WorkFolder(directory).prepare())
-			.withFailMessage("Not all file were deleted!");
+		assertThatThrownBy(() ->  new FolderContent(directory).prepare())
+			.isInstanceOf(Exception.class)
+			.hasMessageContaining("Not all files were deleted!");
 	}
 	
-	@BeforeGroups("normal")
+	@BeforeGroups(groups = "normal")
 	public void beforeNormal(){
 		if (! directory.exists()){
 			directory.mkdir();
@@ -67,7 +65,7 @@ public class WorkFolderTest {
 		}
 	}
 	
-	@AfterGroups("normal")
+	@AfterGroups(groups = "normal")
 	public void afterNormal(){
 		String[] children = directory.list();
 		for (int i=0; i<children.length; i++) {
@@ -79,8 +77,8 @@ public class WorkFolderTest {
 	
 	@Test(groups = {"normal"})
 	public void shouldWorkCorrectly() throws Exception {
-		assertThat(new WorkFolder(directory).prepare())
-			.isEqualTo(3);
+		assertThat(new FolderContent(directory).prepare())
+			.isEqualTo(0);
 	}
 	
 	

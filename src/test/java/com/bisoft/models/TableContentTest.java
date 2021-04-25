@@ -33,7 +33,8 @@ public class TableContentTest {
 
         Statement stmt = connection.createStatement();
         
-        assertThat(new TableContent(stmt, "table1").load()).isTrue();
+        assertThat(new TableContent(stmt, "table1").load()).isEqualTo(3);
+        assertThat(new TableContent(stmt, "table2").load()).isEqualTo(5);
 
     }
     

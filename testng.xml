@@ -2,8 +2,15 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="test_suite">
     <test name="normal">
+        <groups>
+            <run>
+                <include name="normal" />
+                <include name="throw" />
+            </run>
+        </groups>
         <classes>
-            <class name="com.bisoft.models.WorkFolderTest"/>
+            <class name="com.bisoft.models.FolderContentTest"/>
+            <class name="com.bisoft.models.TableContentTest"/>
         </classes>
     </test> <!-- Test -->
 </suite> <!-- Suite -->

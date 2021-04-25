@@ -11,7 +11,7 @@ public class TableContent {
 		this.tableName = tableName;
 	}
 	
-	public boolean load() {
-		return false;
+	public int load() {
+		return 3;
 	}
 }

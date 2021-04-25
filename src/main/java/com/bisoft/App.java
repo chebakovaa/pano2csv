@@ -1,6 +1,7 @@
 package com.bisoft;
 
-import com.bisoft.models.WorkFolder;
+
+import com.bisoft.models.FolderContent;
 
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
@@ -32,7 +33,7 @@ public class App
         if (connection == null) { return; }
 
         try {
-            new WorkFolder(folder).prepare();
+            new FolderContent(folder).prepare();
         } catch (Exception e) {
             e.printStackTrace();
         }
