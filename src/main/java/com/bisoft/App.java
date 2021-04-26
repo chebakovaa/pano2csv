@@ -24,8 +24,9 @@ public class App
     }
     
     private static void SaveCSV() {
-
-        final File folder = new File(Paths.get(System.getProperty("user.home"), "neo4j\\import\\pitc").toUri());
+    
+        FolderContent folderContent = new FolderContent(new File(Paths.get(System.getProperty("user.home"), "neo4j\\import\\pitc").toUri()));
+        
         final String DB_URL = "jdbc:postgresql://192.168.1.60:1105/pitc";
         final String USER = "postgres";
         final String PASS = "";
@@ -33,7 +34,7 @@ public class App
         if (connection == null) { return; }
 
         try {
-            new FolderContent(folder).prepare();
+            folderContent.prepare();
         } catch (Exception e) {
             e.printStackTrace();
         }

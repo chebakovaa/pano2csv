@@ -31,10 +31,12 @@ public class TableContentTest {
     @Test
     public void shouldGetTableContent() throws SQLException {
 
-        Statement stmt = connection.createStatement();
-        
-        assertThat(new TableContent(stmt, "table1").load()).isEqualTo(3);
-        assertThat(new TableContent(stmt, "table2").load()).isEqualTo(5);
+//        Statement stmt = connection.createStatement();
+        TableContent tlb = new TableContent(connection, "table1");
+        tlb.to(new CSVContent(folder));
+        assertThat();
+//        tlb = new TableContent(connection, "table2");
+//        assertThat(tlb.toCSV()).isEqualTo(5);
 
     }
     
