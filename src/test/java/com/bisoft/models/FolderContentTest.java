@@ -1,5 +1,6 @@
 package com.bisoft.models;
 
+import com.bisoft.helpers.ClearFolderContentExeption;
 import org.testng.annotations.*;
 import java.io.File;
 import java.io.FileReader;
@@ -46,8 +47,8 @@ class FolderContentTest {
 	
 	@Test(groups = "throw")
 	public void shouldBeThrows() throws Exception {
-		assertThatThrownBy(() ->  new FolderContent(directory).prepare())
-			.isInstanceOf(Exception.class)
+		assertThatThrownBy(() ->  new FolderContent(directory).clear())
+			.isInstanceOf(ClearFolderContentExeption.class)
 			.hasMessageContaining("Not all files were deleted!");
 	}
 	
@@ -76,9 +77,8 @@ class FolderContentTest {
 	
 	
 	@Test(groups = {"normal"})
-	public void shouldWorkCorrectly() throws Exception {
-		assertThat(new FolderContent(directory).prepare())
-			.isEqualTo(0);
+	public void shouldWorkCorrectly() throws ClearFolderContentExeption {
+		assertThatThrownBy(() ->  new FolderContent(directory).clear()).doesNotThrowAnyException();
 	}
 	
 	

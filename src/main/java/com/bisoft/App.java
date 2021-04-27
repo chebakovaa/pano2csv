@@ -1,6 +1,7 @@
 package com.bisoft;
 
 
+import com.bisoft.helpers.ClearFolderContentExeption;
 import com.bisoft.models.FolderContent;
 
 import java.io.*;
@@ -34,18 +35,17 @@ public class App
         if (connection == null) { return; }
 
         try {
-            folderContent.prepare();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        try {
+            folderContent.clear();
             Statement stmt = connection.createStatement();
             toCSV(stmt, folder.toString(),"select table_name from INFORMATION_SCHEMA.views WHERE table_schema = 'neo'");
             toCSV(stmt, folder.toString(),"select table_name from INFORMATION_SCHEMA.tables WHERE table_schema = 'neo' AND table_type = 'BASE TABLE'");
             stmt.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        catch (ClearFolderContentExeption e)
+        {
+            e.printStackTrace();
         }
     }
     
