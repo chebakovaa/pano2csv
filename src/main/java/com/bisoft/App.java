@@ -2,7 +2,11 @@ package com.bisoft;
 
 
 import com.bisoft.helpers.ClearFolderContentExeption;
+import com.bisoft.interfaces.ITableCollection;
+import com.bisoft.models.CSVFormat;
 import com.bisoft.models.FolderContent;
+import com.bisoft.models.TableCollection;
+import com.bisoft.models.TableContent;
 
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
@@ -25,90 +29,36 @@ public class App
     }
     
     private static void SaveCSV() {
-    
-        FolderContent folderContent = new FolderContent(new File(Paths.get(System.getProperty("user.home"), "neo4j\\import\\pitc").toUri()));
+        File folder = new File(Paths.get(System.getProperty("user.home"), "neo4j\\import\\pitc").toUri());
+        String delimiter = ";";
+        FolderContent folderContent = new FolderContent(folder);
         
         final String DB_URL = "jdbc:postgresql://192.168.1.60:1105/pitc";
         final String USER = "postgres";
         final String PASS = "";
         Connection connection = getConnection(DB_URL, USER, PASS);
         if (connection == null) { return; }
-
         try {
             folderContent.clear();
-            Statement stmt = connection.createStatement();
-            toCSV(stmt, folder.toString(),"select table_name from INFORMATION_SCHEMA.views WHERE table_schema = 'neo'");
-            toCSV(stmt, folder.toString(),"select table_name from INFORMATION_SCHEMA.tables WHERE table_schema = 'neo' AND table_type = 'BASE TABLE'");
-            stmt.close();
+            String query = "select table_name from INFORMATION_SCHEMA.views WHERE table_schema = 'neo' union \n" +
+            "select table_name from INFORMATION_SCHEMA.tables WHERE table_schema = 'neo' AND table_type = 'BASE TABLE'";
+            ITableCollection tc = new TableCollection(connection, query);
+            tc.save(folder, new CSVFormat(delimiter));
         } catch (SQLException e) {
             e.printStackTrace();
         }
         catch (ClearFolderContentExeption e)
         {
             e.printStackTrace();
-        }
-    }
-    
-    private static void toCSV(Statement stmt, String folder, String query) {
-        List<String> models = new ArrayList<>();
-        ResultSet res = null;
-        try {
-            res = stmt.executeQuery(query);
-            while (true) {
-                    if (!res.next()) break;
-                models.add(res.getString("table_name"));
-            }
-            for(String model:models) {
-                List<String> row = new ArrayList<>();
-                List<String[]> rows = new ArrayList<>();
-                ResultSet resView = stmt.executeQuery(String.format("select * from neo.%s", model));
-                int count = resView.getMetaData().getColumnCount();
-                for(int i=1; i<=count; i++){
-                    row.add(resView.getMetaData().getColumnLabel(i));
-                }
-                rows.add(row.toArray(String[]::new));
-                while (resView.next()) {
-                    row.clear();
-                    for(int i=1; i<=count; i++){
-                        row.add(resView.getString(i));
-                    }
-                    rows.add(row.toArray(String[]::new));
-                }
-                try {
-                    saveTable(Path.of(folder, model + ".csv") , rows);
-                } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
-                } catch (InvocationTargetException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (NoSuchFieldException e) {
-                    e.printStackTrace();
-                }
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }
-    
-    private static void saveTable(Path fn, List<String[]> data) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, NoSuchFieldException {
-        try (OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(fn.toString()), "UTF8")) { //"cp1251"
-            data.stream()
-              .map(v -> Arrays.stream(v).collect(Collectors.joining(";")))
-              .forEach(v -> {
-                  try {
-                      out.write(v + "\r\n");
-                  } catch (IOException e) {
-                      e.printStackTrace();
-                  }
-              });
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
     }
-    
+
 }

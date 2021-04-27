@@ -18,7 +18,9 @@ public class TableContentTest {
     
     @Mock
     Connection connection;
-    
+
+
+
     MockitoSession session;
     
     @BeforeMethod
@@ -33,10 +35,6 @@ public class TableContentTest {
 
 //        Statement stmt = connection.createStatement();
         TableContent tlb = new TableContent(connection, "table1");
-        tlb.to(new CSVContent(folder));
-        assertThat();
-//        tlb = new TableContent(connection, "table2");
-//        assertThat(tlb.toCSV()).isEqualTo(5);
 
     }
     

@@ -1,7 +1,8 @@
 package com.bisoft.interfaces;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface ISavedFormat {
-	void save(List<String> row);
+	void saveNext(List<String> row) throws IOException;
 }

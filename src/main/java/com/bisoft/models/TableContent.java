@@ -4,6 +4,7 @@ import com.bisoft.interfaces.IFolderContent;
 import com.bisoft.interfaces.ISavedFormat;
 import com.bisoft.interfaces.ITableContent;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -20,7 +21,7 @@ public class TableContent implements ITableContent {
 		this.tableName = tableName;
 	}
 	
-	public void save(ISavedFormat format) throws SQLException {
+	public void save(ISavedFormat format) throws SQLException, IOException {
 		List<String> cols = new ArrayList();
 		ResultSet resultRows = connection.createStatement().executeQuery(String.format("select * from neo.%s", tableName));
 		ResultSetMetaData meta = resultRows.getMetaData();
@@ -28,13 +29,13 @@ public class TableContent implements ITableContent {
 		for(int i=1; i<=count; i++){
 			cols.add(meta.getColumnLabel(i));
 		}
-		format.save(cols);
+		format.saveNext(cols);
 		while (resultRows.next()) {
 			cols.clear();
 			for(int i=1; i<=count; i++){
 				cols.add(resultRows.getString(i));
 			}
-			format.save(cols);
+			format.saveNext(cols);
 		}
 	}
 }
