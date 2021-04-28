@@ -1,6 +1,7 @@
 package com.bisoft.models;
 
 
+import com.bisoft.interfaces.ISavedFormat;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoSession;
@@ -19,12 +20,13 @@ public class TableContentTest {
     @Mock
     Connection connection;
 
-
-
     MockitoSession session;
     
     @BeforeMethod
     public void before() {
+        //Statement s = mock(Statement.class);
+        //ResultSet rs = mock(ResultSet.class);
+        //ISavedFormat sf = mock(ResultSet.class);
         session = Mockito.mockitoSession()
           .initMocks(this)
           .startMocking();
@@ -35,7 +37,7 @@ public class TableContentTest {
 
 //        Statement stmt = connection.createStatement();
         TableContent tlb = new TableContent(connection, "table1");
-
+        //tlb.save();
     }
     
     @AfterMethod

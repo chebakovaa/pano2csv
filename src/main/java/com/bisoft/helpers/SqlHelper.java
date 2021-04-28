@@ -6,6 +6,8 @@ import java.sql.SQLException;
 
 public class SqlHelper {
 	public static Connection getConnection(final String DB_URL, final String USER, final String PASS) {
+		
+		
 		System.out.println("Connection to PostgreSQL JDBC");
 		try {
 			Class.forName("org.postgresql.Driver");

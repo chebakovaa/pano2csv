@@ -10,12 +10,14 @@ import com.bisoft.models.TableContent;
 
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 import java.util.stream.Collectors;
 
 import static com.bisoft.helpers.SqlHelper.getConnection;
@@ -31,18 +33,33 @@ public class App
     private static void SaveCSV() {
         File folder = new File(Paths.get(System.getProperty("user.home"), "neo4j\\import\\pitc").toUri());
         String delimiter = ";";
-        FolderContent folderContent = new FolderContent(folder);
         
-        final String DB_URL = "jdbc:postgresql://192.168.1.60:1105/pitc";
-        final String USER = "postgres";
-        final String PASS = "";
+        FolderContent folderContent = new FolderContent(folder);
+        Properties property = new Properties();
+        InputStream is = App.class.getClassLoader().getResourceAsStream("db.properties");
+        try {
+            property.load(is);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    
+        InputStream queryStream = App.class.getClassLoader().getResourceAsStream("get_all_tables.sql");
+        String queryTables = new BufferedReader(
+          new InputStreamReader(queryStream, StandardCharsets.UTF_8))
+            .lines()
+          .collect(Collectors.joining("\n"));
+    
+        final String DB_URL = property.getProperty("jdbc.url"); // "jdbc:postgresql://192.168.1.60:1105/pitc";
+        final String USER = property.getProperty("jdbc.username"); //"postgres";
+        final String PASS = property.getProperty("jdbc.password");
         Connection connection = getConnection(DB_URL, USER, PASS);
         if (connection == null) { return; }
         try {
+
+
             folderContent.clear();
-            String query = "select table_name from INFORMATION_SCHEMA.views WHERE table_schema = 'neo' union \n" +
-            "select table_name from INFORMATION_SCHEMA.tables WHERE table_schema = 'neo' AND table_type = 'BASE TABLE'";
-            ITableCollection tc = new TableCollection(connection, query);
+            // String query =
+            ITableCollection tc = new TableCollection(connection, queryTables);
             tc.save(folder, new CSVFormat(delimiter));
         } catch (SQLException e) {
             e.printStackTrace();
