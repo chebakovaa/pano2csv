@@ -78,7 +78,7 @@ class FolderContentTest {
 	
 	@Test(groups = {"normal"})
 	public void shouldWorkCorrectly() throws ClearFolderContentExeption {
-		assertThatThrownBy(() ->  new FolderContent(directory).clear()).doesNotThrowAnyException();
+		assertThatCode(() ->  new FolderContent(directory).clear()).doesNotThrowAnyException();
 	}
 	
 	

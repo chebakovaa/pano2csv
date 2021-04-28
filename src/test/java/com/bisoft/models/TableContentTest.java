@@ -37,7 +37,7 @@ public class TableContentTest {
 
 //        Statement stmt = connection.createStatement();
         TableContent tlb = new TableContent(connection, "table1");
-        //tlb.save();
+        tlb.save();
     }
     
     @AfterMethod

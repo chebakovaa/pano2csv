@@ -33,10 +33,9 @@ public class TableCollection implements ITableCollection {
             if (!tables.next()) break;
             String tableName = tables.getString("table_name");
             //TODO take out sql query into special file
-            String query = String.format("select * from neo.%s", tableName);
+            String contentQuery = String.format("select * from neo.%s", tableName);
             ITableContent table = new TableContent(connection, tableName);
-            format.saveStart((Path.of(folder.toString(), query)).toFile());
-            //
+            format.saveStart((Path.of(folder.toString(), tableName)).toFile());
             table.save(connection.createStatement().executeQuery(query), (ISavedFormat) format);
             format.saveEnd();
         }
