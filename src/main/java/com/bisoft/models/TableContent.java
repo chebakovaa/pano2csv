@@ -36,6 +36,11 @@ public class TableContent implements ITableContent {
 			}
 			format.saveNext(cols);
 		}
+
+//		format.saveNext(source.titles());
+//		while (!source.isEnd()) {
+//			format.saveNext(source.row());
+//		}
 	}
 	
 }
