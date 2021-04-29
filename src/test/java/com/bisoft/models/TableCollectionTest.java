@@ -52,6 +52,8 @@ public class TableCollectionTest {
 		
 	}
 
+	//TODO use mock
+
 	@Test
 	public void shouldGetTableContent() throws SQLException, IOException {
 
