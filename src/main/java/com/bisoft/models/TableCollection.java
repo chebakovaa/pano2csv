@@ -36,7 +36,7 @@ public class TableCollection implements ITableCollection {
             String contentQuery = String.format("select * from neo.%s", tableName);
             ITableContent table = new TableContent(connection, tableName);
             format.saveStart((Path.of(folder.toString(), tableName)).toFile());
-            table.save(connection.createStatement().executeQuery(query), (ISavedFormat) format);
+            table.save(connection.createStatement().executeQuery(contentQuery), (ISavedFormat) format);
             format.saveEnd();
         }
     }

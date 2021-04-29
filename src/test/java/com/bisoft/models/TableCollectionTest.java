@@ -60,8 +60,9 @@ public class TableCollectionTest {
 		tlb.save(directory, new CSVFormat(";"));
 		
 		File[] files = directory.listFiles();
-		assertThat(files).as("count files").isNotEmpty();
+		assertThat(files).as("list of files").isNotEmpty();
 		assertThat(files.length).as("count files").isGreaterThan(1);
+		assertThat(files).as("list of files").doesNotHaveDuplicates();
 		assertThat(Files.readString(files[0].toPath())
 			.equals(Files.readString(files[1].toPath()))).isFalse();
 		
