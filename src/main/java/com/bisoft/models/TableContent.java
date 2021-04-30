@@ -2,6 +2,7 @@ package com.bisoft.models;
 
 import com.bisoft.interfaces.ISavedFormat;
 import com.bisoft.interfaces.ITableContent;
+import com.bisoft.interfaces.ITableSource;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -41,6 +42,16 @@ public class TableContent implements ITableContent {
 //		while (!source.isEnd()) {
 //			format.saveNext(source.row());
 //		}
+	}
+	
+	@Override
+	public void save(ITableSource source, ISavedFormat format) throws IOException {
+
+		format.saveNext(source.titles());
+		while (!source.isEnd()) {
+			format.saveNext(source.row());
+		}
+
 	}
 	
 }

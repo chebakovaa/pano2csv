@@ -26,6 +26,21 @@ public class TableCollection implements ITableCollection {
       this.query = query;
     }
 
+//    @Override
+//    public void save(File folder, IFileFormat format) throws IOException, SQLException {
+//        ResultSet tables = connection.createStatement().executeQuery(query);
+//        while (true) {
+//            if (!tables.next()) break;
+//            String tableName = tables.getString("table_name");
+//            //TODO take out sql query into special file
+//            String contentQuery = String.format("select * from neo.%s", tableName);
+//            ITableContent table = new TableContent(connection, tableName);
+//            format.saveStart((Path.of(folder.toString(), tableName)).toFile());
+//            table.save(connection.createStatement().executeQuery(contentQuery), (ISavedFormat) format);
+//            format.saveEnd();
+//        }
+//    }
+    
     @Override
     public void save(File folder, IFileFormat format) throws IOException, SQLException {
         ResultSet tables = connection.createStatement().executeQuery(query);
@@ -40,4 +55,5 @@ public class TableCollection implements ITableCollection {
             format.saveEnd();
         }
     }
+
 }

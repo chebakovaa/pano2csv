@@ -5,5 +5,5 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public interface ITableContent {
-	void save(ResultSet resultSet, ISavedFormat format) throws SQLException, IOException;
+	void save(ITableSource source, ISavedFormat format) throws IOException;
 }
