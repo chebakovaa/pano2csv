@@ -4,5 +4,5 @@ import java.io.IOException;
 import java.util.List;
 
 public interface ISavedFormat {
-	void saveNext(List<String> row) throws IOException;
+	void save(Iterable<String> row) throws IOException;
 }

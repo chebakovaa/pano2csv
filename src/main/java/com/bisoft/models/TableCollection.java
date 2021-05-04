@@ -1,21 +1,18 @@
 package com.bisoft.models;
 
+import com.bisoft.App;
 import com.bisoft.interfaces.IFileFormat;
 import com.bisoft.interfaces.ISavedFormat;
 import com.bisoft.interfaces.ITableCollection;
 import com.bisoft.interfaces.ITableContent;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.InvocationTargetException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.stream.Collectors;
 
 public class TableCollection implements ITableCollection {
     private final Connection connection;
@@ -26,32 +23,19 @@ public class TableCollection implements ITableCollection {
       this.query = query;
     }
 
-//    @Override
-//    public void save(File folder, IFileFormat format) throws IOException, SQLException {
-//        ResultSet tables = connection.createStatement().executeQuery(query);
-//        while (true) {
-//            if (!tables.next()) break;
-//            String tableName = tables.getString("table_name");
-//            //TODO take out sql query into special file
-//            String contentQuery = String.format("select * from neo.%s", tableName);
-//            ITableContent table = new TableContent(connection, tableName);
-//            format.saveStart((Path.of(folder.toString(), tableName)).toFile());
-//            table.save(connection.createStatement().executeQuery(contentQuery), (ISavedFormat) format);
-//            format.saveEnd();
-//        }
-//    }
-    
     @Override
     public void save(File folder, IFileFormat format) throws IOException, SQLException {
+        String queryColumns = (new ResourceFile("get_table_content.sql")).content();
+
         ResultSet tables = connection.createStatement().executeQuery(query);
-        while (true) {
-            if (!tables.next()) break;
+        while (tables.next()) {
             String tableName = tables.getString("table_name");
-            //TODO take out sql query into special file
-            String contentQuery = String.format("select * from neo.%s", tableName);
+            String contentQuery = String.format(queryColumns, tableName);
             ITableContent table = new TableContent(connection, tableName);
+
+
             format.saveStart((Path.of(folder.toString(), tableName)).toFile());
-            table.save(connection.createStatement().executeQuery(contentQuery), (ISavedFormat) format);
+            table.save(new DBSource(connection, contentQuery), (ISavedFormat) format);
             format.saveEnd();
         }
     }

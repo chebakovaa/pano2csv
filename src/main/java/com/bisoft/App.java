@@ -35,6 +35,7 @@ public class App
         String delimiter = ";";
         
         FolderContent folderContent = new FolderContent(folder);
+
         Properties property = new Properties();
         InputStream is = App.class.getClassLoader().getResourceAsStream("db.properties");
         try {
@@ -55,10 +56,7 @@ public class App
         Connection connection = getConnection(DB_URL, USER, PASS);
         if (connection == null) { return; }
         try {
-
-
             folderContent.clear();
-            // String query =
             ITableCollection tc = new TableCollection(connection, queryTables);
             tc.save(folder, new CSVFormat(delimiter));
         } catch (SQLException e) {

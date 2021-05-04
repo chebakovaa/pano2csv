@@ -1,11 +1,10 @@
 package com.bisoft.interfaces;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface ITableSource {
-	List<String> titles();
-	
-	List<String> row();
-	
-	boolean isEnd();
+
+	IContentSource  content() throws SQLException;
+
 }

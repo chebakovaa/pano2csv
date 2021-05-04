@@ -7,6 +7,7 @@ import java.io.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 public class CSVFormat implements ISavedFormat, IFileFormat {
 	
@@ -28,7 +29,7 @@ public class CSVFormat implements ISavedFormat, IFileFormat {
 	}
 
 	@Override
-	public void saveNext(List<String> row) throws IOException {
-		out.write(row.stream().collect(Collectors.joining(delimiter)) + "\r\n");
+	public void save(Iterable<String> row) throws IOException {
+		out.write(StreamSupport.stream(row.spliterator(), false).collect(Collectors.joining(delimiter)) + "\r\n");
 	}
 }
