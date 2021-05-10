@@ -1,6 +1,7 @@
 package com.bisoft.models;
 
 import com.bisoft.helpers.ClearFolderContentExeption;
+import com.bisoft.interfaces.IClearedFolder;
 import com.bisoft.interfaces.IFolderContent;
 
 import java.io.File;
@@ -13,8 +14,7 @@ public class FolderContent implements IFolderContent {
 		this.folder = folder;
 	}
 	
-	@Override
-	public void clear() throws ClearFolderContentExeption {
+	private void clear() throws ClearFolderContentExeption {
 		File[] files = folder.listFiles();
 		for(File fl:files){
 			fl.delete();
@@ -23,5 +23,11 @@ public class FolderContent implements IFolderContent {
 			throw new ClearFolderContentExeption("Not all files were deleted!");
 		}
 	}
-	
+
+	@Override
+	public IClearedFolder clearedFolder() throws ClearFolderContentExeption {
+		clear();
+		return new ClearedFolder(folder);
+	}
+
 }

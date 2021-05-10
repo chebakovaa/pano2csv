@@ -1,18 +1,12 @@
 package com.bisoft.models;
 
-import com.bisoft.App;
-import com.bisoft.interfaces.IFileFormat;
-import com.bisoft.interfaces.ISavedFormat;
-import com.bisoft.interfaces.ITableCollection;
-import com.bisoft.interfaces.ITableContent;
+import com.bisoft.interfaces.*;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.stream.Collectors;
 
 public class TableCollection implements ITableCollection {
     private final Connection connection;
@@ -24,7 +18,7 @@ public class TableCollection implements ITableCollection {
     }
 
     @Override
-    public void save(File folder, IFileFormat format) throws IOException, SQLException {
+    public void save(IClearedFolder folder, IFileFormat format) throws IOException, SQLException {
         String queryColumns = (new ResourceFile("get_table_content.sql")).content();
 
         ResultSet tables = connection.createStatement().executeQuery(query);
