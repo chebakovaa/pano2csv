@@ -1,7 +1,7 @@
 package com.bisoft.interfaces;
 
-import com.bisoft.helpers.DBConnectionExeption;
+import com.bisoft.exeptions.DBConnectionException;
 
 public interface IAppConnection {
-    IOpennedConnection opennedConnection() throws DBConnectionExeption;
+    IOpennedConnection opennedConnection() throws DBConnectionException;
 }

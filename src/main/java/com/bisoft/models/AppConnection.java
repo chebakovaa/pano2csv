@@ -1,9 +1,7 @@
 package com.bisoft.models;
 
-import com.bisoft.helpers.ClearFolderContentExeption;
-import com.bisoft.helpers.DBConnectionExeption;
+import com.bisoft.exeptions.DBConnectionException;
 import com.bisoft.interfaces.IAppConnection;
-import com.bisoft.interfaces.IAppResource;
 import com.bisoft.interfaces.IOpennedConnection;
 
 import java.sql.Connection;
@@ -19,11 +17,11 @@ public class AppConnection implements IAppConnection {
     }
 
     @Override
-    public IOpennedConnection opennedConnection() throws DBConnectionExeption {
+    public IOpennedConnection opennedConnection() throws DBConnectionException {
 
         Connection connection = getConnection(resource.dbURL(), resource.user(), resource.password());
         if (connection == null) {
-            throw new DBConnectionExeption("DB connection fail");
+            throw new DBConnectionException("DB connection fail");
         }
         return new OpennedConnection(connection);
     }

@@ -1,20 +1,18 @@
 package com.bisoft;
 
 
-import com.bisoft.helpers.ClearFolderContentExeption;
-import com.bisoft.helpers.DBConnectionExeption;
+import com.bisoft.exeptions.ClearFolderContentException;
+import com.bisoft.exeptions.DBConnectionException;
+import com.bisoft.exeptions.LoadConnectionParameterException;
 import com.bisoft.interfaces.*;
 import com.bisoft.models.*;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
 import java.util.stream.Collectors;
-
-import static com.bisoft.helpers.SqlHelper.getConnection;
 
 public class App
 {
@@ -29,15 +27,20 @@ public class App
             IAppConnection appConnection = new AppConnection(new AppResource("db.properties").loadedProperties());
             IOpennedConnection openedConnection = appConnection.opennedConnection();
 
-            ITableCollection tc = new TableCollection(openedConnection, queryResources);
-            tc.save(clearedFolder, new CSVFormat(delimiter));
-        } catch (ClearFolderContentExeption clearFolderContentExeption) {
+            ITableCollection tc = new TableCollection(
+              openedConnection,
+              queryResources,
+              clearedFolder,
+              new CSVFormat(delimiter)
+            );
+            tc.save();
+        } catch (ClearFolderContentException clearFolderContentExeption) {
             clearFolderContentExeption.printStackTrace();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (DBConnectionExeption dbConnectionExeption) {
+        } catch (DBConnectionException | LoadConnectionParameterException dbConnectionExeption) {
             dbConnectionExeption.printStackTrace();
         }
     }
@@ -67,7 +70,7 @@ public class App
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        catch (ClearFolderContentExeption e)
+        catch (ClearFolderContentException e)
         {
             e.printStackTrace();
         } catch (IOException e) {

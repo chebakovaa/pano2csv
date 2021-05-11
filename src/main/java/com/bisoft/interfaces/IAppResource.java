@@ -1,7 +1,10 @@
 package com.bisoft.interfaces;
 
+import com.bisoft.exeptions.LoadConnectionParameterException;
+
 import java.io.IOException;
+import java.util.Map;
 
 public interface IAppResource {
-    IAppResource load() throws IOException;
+    Map<String, String> loadedProperties() throws LoadConnectionParameterException;
 }

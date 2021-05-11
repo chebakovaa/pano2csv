@@ -1,7 +1,7 @@
 package com.bisoft.interfaces;
 
-import com.bisoft.helpers.ClearFolderContentExeption;
+import com.bisoft.exeptions.ClearFolderContentException;
 
 public interface IFolderContent {
-    IClearedFolder clearedFolder() throws ClearFolderContentExeption;
+    IClearedFolder clearedFolder() throws ClearFolderContentException;
 }
