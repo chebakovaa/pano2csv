@@ -29,6 +29,6 @@ public final class ContentSource implements IContentSource {
 
     @Override
     public Iterable<List<String>> body() {
-        return new TableBody(result, columnCount);
+        return new TableBody(result);
     }
 }

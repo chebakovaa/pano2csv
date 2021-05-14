@@ -1,6 +1,7 @@
 package com.bisoft.models;
 
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -9,16 +10,20 @@ import java.util.NoSuchElementException;
 
 public class TableBody implements Iterable<List<String>> {
     private final ResultSet result;
-    private final int columnCount;
 
-    public TableBody(ResultSet result, int columnCount) {
+    public TableBody(ResultSet result) {
         this.result = result;
-        this.columnCount = columnCount;
     }
 
     @Override
     public Iterator<List<String>> iterator() {
-        return new BodyIterator(result, columnCount);
+        try {
+            ResultSetMetaData meta = result.getMetaData();
+            return new BodyIterator(result, meta.getColumnCount());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new BodyIterator(result, 0);
     }
 
 }

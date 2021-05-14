@@ -1,29 +1,33 @@
 package com.bisoft.models;
 
-import com.bisoft.interfaces.IContentSource;
-import com.bisoft.interfaces.ITableSource;
+import com.bisoft.exeptions.GetObjectNamesException;
+import com.bisoft.interfaces.IModelObject;
+import com.bisoft.interfaces.IModelSource;
+import com.bisoft.interfaces.IOpennedConnection;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.Iterator;
 
-public final class DBSource implements ITableSource {
-
-    private final String contentQuery;
-    private final Connection connection;
-
-    public DBSource(Connection connection, String contentQuery){
-        this.contentQuery = contentQuery;
-        this.connection = connection;
-    }
-
-    @Override
-    public IContentSource content() throws SQLException {
-        ResultSet resultRows = connection.createStatement().executeQuery(contentQuery);
-        ResultSetMetaData meta = resultRows.getMetaData();
-        return new ContentSource(resultRows, meta.getColumnCount());
-    }
-
+public class DBSource implements IModelSource {
+	private final String collectionQuery;
+	private final String objectQuery;
+	private final IOpennedConnection openedConnection;
+	
+	public DBSource(IOpennedConnection openedConnection, String collectionQuery, String objectQuery) {
+		this.openedConnection = openedConnection;
+		this.collectionQuery = collectionQuery;
+		this.objectQuery = objectQuery;
+	}
+	
+	@Override
+	public Iterator<IModelObject> objectCollection() throws GetObjectNamesException {
+		try {
+			ResultSet tables = openedConnection.Query(collectionQuery);
+			return new ModelObjectDBCollection(openedConnection, tables, objectQuery);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new GetObjectNamesException("Get Object Names Fail");
+		}
+	}
 }
