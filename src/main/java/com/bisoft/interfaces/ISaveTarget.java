@@ -1,5 +1,8 @@
 package com.bisoft.interfaces;
 
-public interface ISaveTarget extends AutoCloseable{
-	ISavedFormat savedFormat();
+import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
+
+public interface ISaveTarget{
+	ICustomFormat savedFormat(IModelObject next) throws FileNotFoundException, UnsupportedEncodingException;
 }

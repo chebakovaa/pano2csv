@@ -5,6 +5,6 @@ import com.bisoft.exeptions.GetObjectNamesException;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public interface ISavedModel {
+public interface IObjectStructure {
     void save() throws IOException, GetObjectNamesException;
 }

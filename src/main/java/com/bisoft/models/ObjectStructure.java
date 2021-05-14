@@ -4,18 +4,14 @@ import com.bisoft.exeptions.GetObjectNamesException;
 import com.bisoft.interfaces.*;
 
 import java.io.*;
-import java.nio.file.Path;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Iterator;
 
-public class SavedModel implements ISavedModel {
+public class ObjectStructure implements IObjectStructure {
     
     private final IModelSource source;
     private final ISaveTarget target;
     
-    public SavedModel(IModelSource source, ISaveTarget target) {
+    public ObjectStructure(IModelSource source, ISaveTarget target) {
         this.source = source;
         this.target = target;
     }
@@ -24,9 +20,12 @@ public class SavedModel implements ISavedModel {
     public void save() throws IOException, GetObjectNamesException {
         Iterator<IModelObject> collection = source.objectCollection();
         while (collection.hasNext()) {
-            try(ISavedFormat format = target.savedFormat()){
-                format.save(collection.next());
-            };
+            try(ISavedFormat format = target.savedFormat(collection.next())){
+                format.save();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            ;
             
 //            String tableName = tables.getString("table_name");
 //            String contentQuery = String.format(queryColumns, tableName);

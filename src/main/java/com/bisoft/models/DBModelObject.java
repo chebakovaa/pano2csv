@@ -18,7 +18,12 @@ public class DBModelObject implements IModelObject {
 		this.table_name = table_name;
 		this.dataSet = dataSet;
 	}
-	
+
+	@Override
+	public String name() {
+		return table_name;
+	}
+
 	@Override
 	public List<String> title() throws GetTitleObjectException {
 		List<String> row = new ArrayList<>();

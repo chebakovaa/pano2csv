@@ -32,4 +32,6 @@ public class CSVFormat implements ISavedFormat {
 	public void save(Iterable<String> row) throws IOException {
 		out.write(StreamSupport.stream(row.spliterator(), false).collect(Collectors.joining(delimiter)) + "\r\n");
 	}
+
+
 }

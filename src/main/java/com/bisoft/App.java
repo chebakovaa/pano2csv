@@ -4,7 +4,8 @@ package com.bisoft;
 import com.bisoft.exeptions.ClearFolderContentException;
 import com.bisoft.exeptions.DBConnectionException;
 import com.bisoft.exeptions.LoadConnectionParameterException;
-import com.bisoft.helpers.StringResource;
+import com.bisoft.resources.MapResource;
+import com.bisoft.resources.StringResource;
 import com.bisoft.interfaces.IAppConnection;
 import com.bisoft.models.*;
 
@@ -24,7 +25,7 @@ public class App
 
             IAppConnection appConnection = new AppConnection(new MapResource("db.properties").loadedResource());
 
-            new SavedModel(
+            new ObjectStructure(
               new DBSource(
                 appConnection.opennedConnection(),
                 new StringResource("get_all_table.sql").loadedResource(),
@@ -60,7 +61,7 @@ public class App
 //
 //        try {
 //            folderContent.clear();
-//            ISavedModel tc = new TableCollection(connection, queryTables);
+//            IObjectStructure tc = new TableCollection(connection, queryTables);
 //            tc.save(folder, new CSVFormat(delimiter));
 //        } catch (SQLException e) {
 //            e.printStackTrace();

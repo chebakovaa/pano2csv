@@ -1,4 +1,4 @@
-package com.bisoft.models;
+package com.bisoft.resources;
 
 import com.bisoft.App;
 import com.bisoft.exeptions.LoadConnectionParameterException;
