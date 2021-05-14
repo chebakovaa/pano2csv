@@ -42,8 +42,8 @@ class BodyIterator implements Iterator<List<String>> {
     public boolean hasNext() {
         try {
             return result.next();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return false;
     }

@@ -2,7 +2,6 @@ package com.bisoft.models;
 
 import com.bisoft.exeptions.GetTitleObjectException;
 import com.bisoft.interfaces.IModelObject;
-import com.bisoft.interfaces.IOpennedConnection;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;

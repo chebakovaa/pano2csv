@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-public class CSVFormat implements ISavedFormat, IFileFormat {
+public class CSVFormat implements ISavedFormat {
 	
 	private final String delimiter;
 	private OutputStreamWriter out;
