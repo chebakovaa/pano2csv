@@ -5,6 +5,8 @@ import com.bisoft.interfaces.IModelSource;
 import com.bisoft.interfaces.ISaveTarget;
 import org.testng.annotations.Test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStreamWriter;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
@@ -19,7 +21,10 @@ public class ObjectStructureTest {
 						, new IModelObject.Fake("2", List.of("21", "22", "23"), List.of(List.of("211", "212", "213"), List.of("221", "222", "223")))
 						)
 				),
-				new ISaveTarget.Fake()))
+				new ISaveTarget.Fake(
+						new OutputStreamWriter(new ByteArrayOutputStream(), "UTF8")
+						, new CSVFormat(";")
+				)))
 				.doesNotThrowAnyException();
 	}
 

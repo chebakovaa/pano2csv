@@ -1,6 +1,9 @@
 package com.bisoft.interfaces;
 
+import com.bisoft.models.OpenedFile;
+
 import java.io.FileNotFoundException;
+import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 
 public interface ISaveTarget{
@@ -8,13 +11,19 @@ public interface ISaveTarget{
 
 	public class Fake implements ISaveTarget {
 
-		public Fake(){
+		private final OutputStreamWriter stream;
+		private final ISavedFormat format;
 
+		public Fake(OutputStreamWriter os, ISavedFormat sf){
+			this.stream = os;
+			this.format = sf;
 		}
 
 		@Override
 		public IOpenedFile savedFormat(String name) throws FileNotFoundException, UnsupportedEncodingException {
-			return new IOpenedFile.Fake();
+			return new OpenedFile(
+				stream, format
+			);
 		}
 	}
 }
