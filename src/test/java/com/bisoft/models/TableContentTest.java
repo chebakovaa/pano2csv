@@ -36,7 +36,7 @@ public class TableContentTest {
     public void shouldGetTableContent() throws SQLException {
 
 //        Statement stmt = connection.createStatement();
-        TableContent tlb = new TableContent(connection, "table1");
+        //TableContent tlb = new TableContent(connection, "table1");
         //tlb.save();
     }
     

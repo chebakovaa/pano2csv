@@ -10,4 +10,9 @@ public class ClearedFolder implements IClearedFolder {
     public ClearedFolder(File folder) {
         this.folder = folder;
     }
+
+    @Override
+    public String toString() {
+        return folder.toString();
+    }
 }

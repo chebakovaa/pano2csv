@@ -1,6 +1,7 @@
 package com.bisoft.models;
 
 import com.bisoft.exeptions.GetObjectNamesException;
+import com.bisoft.exeptions.WriteObjectException;
 import com.bisoft.interfaces.*;
 
 import java.io.*;
@@ -20,21 +21,13 @@ public class ObjectStructure implements IObjectStructure {
     public void save() throws IOException, GetObjectNamesException {
         Iterator<IModelObject> collection = source.objectCollection();
         while (collection.hasNext()) {
-            try(ISavedFormat format = target.savedFormat(collection.next())){
-                format.save();
+            IModelObject object = collection.next();
+            try(IOpenedFile file = target.savedFormat(object.name())){
+                file.save(object);
             } catch (Exception e) {
                 e.printStackTrace();
+                new WriteObjectException("Writing Object Failed");
             }
-            ;
-            
-//            String tableName = tables.getString("table_name");
-//            String contentQuery = String.format(queryColumns, tableName);
-//            ITableContent table = new TableContent(connection, tableName);
-//
-//
-//            format.saveStart((Path.of(folder.toString(), tableName)).toFile());
-//            table.save(new DBObjectSource(connection, contentQuery), (ISavedFormat) format);
-//            format.saveEnd();
         }
     }
 

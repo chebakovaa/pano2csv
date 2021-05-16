@@ -11,23 +11,16 @@ import java.nio.file.Path;
 public class FileTarget implements ISaveTarget {
 	private final IClearedFolder location;
 	private final ISavedFormat format;
-	private OutputStreamWriter out;
-	
+
 	public FileTarget(IClearedFolder location, ISavedFormat format) {
 		this.location = location;
 		this.format = format;
 	}
 	
 	@Override
-	public ICustomFormat savedFormat(IModelObject object) throws FileNotFoundException, UnsupportedEncodingException {
-		out = new OutputStreamWriter(new FileOutputStream(Path.of(location.toString(), object.name()).toFile()), "UTF8");
-		return null;
+	public IOpenedFile savedFormat(String name) throws FileNotFoundException, UnsupportedEncodingException {
+		OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(Path.of(location.toString(), name).toFile()), "UTF8");
+		return new OpenedFile(out, format);
 	}
-	
-//	@Override
-//	public void close() throws Exception {
-//		if(out != null) {
-//			out.close();
-//		}
-//	}
+
 }

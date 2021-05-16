@@ -19,7 +19,7 @@ public class AppConnection implements IAppConnection {
     @Override
     public IOpennedConnection opennedConnection() throws DBConnectionException {
 
-        Connection connection = getConnection(resource.dbURL(), resource.user(), resource.password());
+        Connection connection = getConnection(resource.get("jdbc.url"), resource.get("jdbc.username"), resource.get("jdbc.password"));
         if (connection == null) {
             throw new DBConnectionException("DB connection fail");
         }

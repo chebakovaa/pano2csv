@@ -19,19 +19,8 @@ public class CSVFormat implements ISavedFormat {
 	}
 
 	@Override
-	public void saveStart(File file) throws FileNotFoundException, UnsupportedEncodingException {
-		out = new OutputStreamWriter(new FileOutputStream(file.toString()+".csv"), "UTF8");
-	}
-
-	@Override
-	public void saveEnd() throws IOException {
-		out.close();
-	}
-
-	@Override
-	public void save(Iterable<String> row) throws IOException {
+	public void save(OutputStreamWriter out, Iterable<String> row) throws IOException {
 		out.write(StreamSupport.stream(row.spliterator(), false).collect(Collectors.joining(delimiter)) + "\r\n");
 	}
-
 
 }

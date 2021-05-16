@@ -54,21 +54,21 @@ public class TableCollectionTest {
 
 	//TODO use mock
 
-	@Test
-	public void shouldGetTableContent() throws SQLException, IOException {
-
-		TableCollection tlb = new TableCollection(connection, queryTables);
-
-		tlb.save(directory, new CSVFormat(";"));
-		
-		File[] files = directory.listFiles();
-		assertThat(files).as("list of files").isNotEmpty();
-		assertThat(files.length).as("count files").isGreaterThan(1);
-		assertThat(files).as("list of files").doesNotHaveDuplicates();
-		assertThat(Files.readString(files[0].toPath())
-			.equals(Files.readString(files[1].toPath()))).isFalse();
-		
-	}
+//	@Test
+//	public void shouldGetTableContent() throws SQLException, IOException {
+//
+//		TableCollection tlb = new TableCollection(connection, queryTables);
+//
+//		tlb.save(directory, new CSVFormat(";"));
+//
+//		File[] files = directory.listFiles();
+//		assertThat(files).as("list of files").isNotEmpty();
+//		assertThat(files.length).as("count files").isGreaterThan(1);
+//		assertThat(files).as("list of files").doesNotHaveDuplicates();
+//		assertThat(Files.readString(files[0].toPath())
+//			.equals(Files.readString(files[1].toPath()))).isFalse();
+//
+//	}
 	
 	@AfterMethod
 	public void after() {

@@ -45,12 +45,12 @@ class FolderContentTest {
 	}
 	
 	
-	@Test(groups = "throw")
-	public void shouldBeThrows() throws Exception {
-		assertThatThrownBy(() ->  new FolderContent(directory).clear())
-			.isInstanceOf(ClearFolderContentException.class)
-			.hasMessageContaining("Not all files were deleted!");
-	}
+//	@Test(groups = "throw")
+//	public void shouldBeThrows() throws Exception {
+//		assertThatThrownBy(() ->  new FolderContent(directory).clear())
+//			.isInstanceOf(ClearFolderContentException.class)
+//			.hasMessageContaining("Not all files were deleted!");
+//	}
 	
 	@BeforeGroups(groups = "normal")
 	public void beforeNormal(){
@@ -76,10 +76,10 @@ class FolderContentTest {
 	}
 	
 	
-	@Test(groups = {"normal"})
-	public void shouldWorkCorrectly() throws ClearFolderContentException {
-		assertThatCode(() ->  new FolderContent(directory).clear()).doesNotThrowAnyException();
-	}
+//	@Test(groups = {"normal"})
+//	public void shouldWorkCorrectly() throws ClearFolderContentException {
+//		assertThatCode(() ->  new FolderContent(directory).clear()).doesNotThrowAnyException();
+//	}
 	
 	
 }

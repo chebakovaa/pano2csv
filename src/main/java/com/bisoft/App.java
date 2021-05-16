@@ -3,6 +3,7 @@ package com.bisoft;
 
 import com.bisoft.exeptions.ClearFolderContentException;
 import com.bisoft.exeptions.DBConnectionException;
+import com.bisoft.exeptions.GetObjectNamesException;
 import com.bisoft.exeptions.LoadConnectionParameterException;
 import com.bisoft.resources.MapResource;
 import com.bisoft.resources.StringResource;
@@ -20,7 +21,7 @@ public class App
     {
         try {
             Map<String, String> target = new MapResource("target.properties").loadedResource();
-            File folder = args[0] != null && args[0].length() > 0 ? new File(args[0])
+            File folder = args.length > 0 && args[0] != null && args[0].length() > 0 ? new File(args[0])
               : new File(Paths.get(System.getProperty("user.home"), target.get("location")).toUri());
 
             IAppConnection appConnection = new AppConnection(new MapResource("db.properties").loadedResource());
@@ -28,7 +29,7 @@ public class App
             new ObjectStructure(
               new DBSource(
                 appConnection.opennedConnection(),
-                new StringResource("get_all_table.sql").loadedResource(),
+                new StringResource("get_all_tables.sql").loadedResource(),
                 new StringResource("get_table_content.sql").loadedResource()
               ),
               new FileTarget(
@@ -36,7 +37,7 @@ public class App
                 new CSVFormat(target.get("column.delimiter"))
               )
             ).save();
-        } catch (ClearFolderContentException | IOException | DBConnectionException | LoadConnectionParameterException e) {
+        } catch (ClearFolderContentException | IOException | DBConnectionException | LoadConnectionParameterException | GetObjectNamesException e) {
             e.printStackTrace();
         }
     }
