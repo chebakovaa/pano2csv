@@ -10,7 +10,11 @@
         </groups>
         <classes>
             <class name="com.bisoft.models.FolderContentTest"/>
-            <class name="com.bisoft.models.TableContentTest"/>
+        </classes>
+    </test> <!-- Test -->
+    <test name="normal2">
+        <classes>
+            <class name="com.bisoft.models.ObjectStructureTest"/>
         </classes>
     </test> <!-- Test -->
 </suite> <!-- Suite -->

@@ -20,7 +20,7 @@ public class CSVFormat implements ISavedFormat {
 
 	@Override
 	public void save(OutputStreamWriter out, Iterable<String> row) throws IOException {
-		out.write(StreamSupport.stream(row.spliterator(), false).collect(Collectors.joining(delimiter)) + "\r\n");
+		  out.write(StreamSupport.stream(row.spliterator(), false).collect(Collectors.joining(delimiter)) + "\r\n");
 	}
 
 }
