@@ -1,6 +1,7 @@
 package com.bisoft.interfaces;
 
 import com.bisoft.models.OpenedFile;
+import com.bisoft.navi.common.interfaces.ISavedFormat;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;

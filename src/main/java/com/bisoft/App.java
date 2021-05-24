@@ -4,11 +4,12 @@ package com.bisoft;
 import com.bisoft.exeptions.ClearFolderContentException;
 import com.bisoft.exeptions.DBConnectionException;
 import com.bisoft.exeptions.GetObjectNamesException;
-import com.bisoft.exeptions.LoadConnectionParameterException;
-import com.bisoft.resources.MapResource;
-import com.bisoft.resources.StringResource;
 import com.bisoft.interfaces.IAppConnection;
 import com.bisoft.models.*;
+import com.bisoft.navi.common.exceptions.LoadConnectionParameterException;
+import com.bisoft.navi.common.model.CSVFormat;
+import com.bisoft.navi.common.resources.MapResource;
+import com.bisoft.navi.common.resources.StringResource;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,7 +38,7 @@ public class App
                 new CSVFormat(target.get("column.delimiter"))
               )
             ).save();
-        } catch (ClearFolderContentException | IOException | DBConnectionException | LoadConnectionParameterException | GetObjectNamesException e) {
+        } catch (ClearFolderContentException | IOException | DBConnectionException | GetObjectNamesException | LoadConnectionParameterException e) {
             e.printStackTrace();
         }
     }

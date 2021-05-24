@@ -3,7 +3,7 @@ package com.bisoft.models;
 import com.bisoft.exeptions.GetTitleObjectException;
 import com.bisoft.interfaces.IModelObject;
 import com.bisoft.interfaces.IOpenedFile;
-import com.bisoft.interfaces.ISavedFormat;
+import com.bisoft.navi.common.interfaces.ISavedFormat;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
