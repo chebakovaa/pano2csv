@@ -6,7 +6,7 @@ import com.bisoft.exeptions.DBConnectionException;
 import com.bisoft.exeptions.GetObjectNamesException;
 import com.bisoft.interfaces.IAppConnection;
 import com.bisoft.models.*;
-import com.bisoft.navi.common.exceptions.LoadConnectionParameterException;
+import com.bisoft.navi.common.exceptions.*;
 import com.bisoft.navi.common.model.CSVFormat;
 import com.bisoft.navi.common.resources.MapResource;
 import com.bisoft.navi.common.resources.StringResource;
@@ -42,44 +42,5 @@ public class App
             e.printStackTrace();
         }
     }
-    
-//    private static void SaveCSV() {
-//
-//        Properties property = new Properties();
-//        InputStream is = App.class.getClassLoader().getResourceAsStream("db.properties");
-//        try {
-//            property.load(is);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        InputStream queryStream = App.class.getClassLoader().getResourceAsStream("get_all_tables.sql");
-//        String queryTables = new BufferedReader(
-//          new InputStreamReader(queryStream, StandardCharsets.UTF_8))
-//            .lines()
-//          .collect(Collectors.joining("\n"));
-//
-//
-//
-//        try {
-//            folderContent.clear();
-//            IObjectStructure tc = new TableCollection(connection, queryTables);
-//            tc.save(folder, new CSVFormat(delimiter));
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        catch (ClearFolderContentException e)
-//        {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } finally {
-//            try {
-//                connection.close();
-//            } catch (SQLException throwables) {
-//                throwables.printStackTrace();
-//            }
-//        }
-//    }
 
 }

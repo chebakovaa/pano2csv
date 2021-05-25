@@ -3,16 +3,15 @@ package com.bisoft.models;
 import com.bisoft.interfaces.IModelObject;
 import com.bisoft.interfaces.IModelSource;
 import com.bisoft.interfaces.ISaveTarget;
+import com.bisoft.navi.common.model.CSVFormat;
 import org.testng.annotations.Test;
 
 import java.io.ByteArrayOutputStream;
-import java.io.OutputStreamWriter;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 public class ObjectStructureTest {
 

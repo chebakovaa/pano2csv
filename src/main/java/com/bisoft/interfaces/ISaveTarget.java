@@ -23,7 +23,7 @@ public interface ISaveTarget{
 		}
 
 		@Override
-		public IOpenedFile savedFormat(String name) throws FileNotFoundException, UnsupportedEncodingException {
+		public IOpenedFile savedFormat(String name) throws UnsupportedEncodingException {
 			return new OpenedFile(
 				new OutputStreamWriter(streams.get(name), "UTF8"), format
 			);
