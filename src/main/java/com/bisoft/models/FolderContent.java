@@ -15,6 +15,7 @@ public class FolderContent implements IFolderContent {
 	}
 	
 	private void clear() throws ClearFolderContentException {
+		
 		File[] files = folder.listFiles();
 		for(File fl:files){
 			fl.delete();

@@ -1,6 +1,9 @@
 package com.bisoft.models;
 
-import com.bisoft.interfaces.*;
+import com.bisoft.interfaces.IClearedFolder;
+import com.bisoft.interfaces.IOpenedFile;
+import com.bisoft.interfaces.ISaveTarget;
+import com.bisoft.navi.common.interfaces.ISavedFormat;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;

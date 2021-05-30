@@ -1,1 +1,2 @@
-select table_name from INFORMATION_SCHEMA.views WHERE table_schema = 'neo' union select table_name from INFORMATION_SCHEMA.tables WHERE table_schema = 'neo' AND table_type = 'BASE TABLE'
+select table_name from INFORMATION_SCHEMA.tables
+WHERE table_schema = 'neo' and not table_name like '\_%'
