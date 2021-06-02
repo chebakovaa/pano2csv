@@ -1,13 +1,12 @@
 package com.bisoft.models;
 
-import com.bisoft.exeptions.GetObjectNamesException;
-import com.bisoft.interfaces.IModelObject;
-import com.bisoft.interfaces.IModelSource;
+
 import com.bisoft.interfaces.IOpennedConnection;
+import com.bisoft.navi.common.exceptions.GetObjectNamesException;
+import com.bisoft.navi.common.interfaces.IModelObject;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Iterator;
 
 public class DBSource implements IModelSource {
 	private final String collectionQuery;

@@ -3,7 +3,6 @@ package com.bisoft;
 
 import com.bisoft.exeptions.ClearFolderContentException;
 import com.bisoft.exeptions.DBConnectionException;
-import com.bisoft.exeptions.GetObjectNamesException;
 import com.bisoft.interfaces.IAppConnection;
 import com.bisoft.models.*;
 import com.bisoft.navi.common.exceptions.*;
