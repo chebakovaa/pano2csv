@@ -3,6 +3,7 @@ package com.bisoft.models;
 import com.bisoft.interfaces.IModelObject;
 import com.bisoft.interfaces.IModelSource;
 import com.bisoft.interfaces.ISaveTarget;
+import com.bisoft.navi.common.model.CSVFormat;
 import org.testng.annotations.Test;
 
 import java.io.ByteArrayOutputStream;
